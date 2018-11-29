@@ -24,7 +24,6 @@ MunroListView.prototype.populateTable = function (tableName, munroArray) {
   const tbody = document.createElement("tbody");
   munroArray.forEach((munro) => {
     const munroCard = new MunroCardView(munro);
-    console.dir(munroCard);
     tbody.append(munroCard.render());
   })
   table.appendChild(tbody);

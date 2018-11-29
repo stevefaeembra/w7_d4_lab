@@ -7,7 +7,7 @@ const Munroes = function () {
   // this filter is used to restrict what gets sent out
   // it's an arrow function passed a munro, which should
   // return true if it's to be included.
-  this.filter = (item) => true; // no filtering
+  this.filter = (munro) => true; // no filtering
 }
 
 Munroes.prototype.getRegions = function () {
@@ -36,8 +36,11 @@ Munroes.prototype.bindEvents = function () {
 
   PubSub.subscribe("RegionSelectView:select-changed", (event) => {
     region = event.detail;
-    console.log(region);
-    this.filter = (munro) => munro.region === region;
+    if (region==="") {
+      this.filter = (munro) => true;
+    } else {
+      this.filter = (munro) => munro.region === region;
+    };
     const filteredData = this.data.filter(this.filter);
     PubSub.publish("Munroes:got-data", filteredData);
   })
