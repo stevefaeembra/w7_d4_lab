@@ -24,12 +24,13 @@ Munroes.prototype.getRegions = function () {
 Munroes.prototype.addRanks = function () {
   let rank = 0;
   let height = 9999;
-  this.data.forEach((munro) => {
+  this.data.forEach((munro,index,array) => {
     if(munro.height<height) {
       rank += 1;
       munro.rank = `${rank}`;
       height = munro.height;
     } else {
+      array[index-1].rank = `${rank}=`;
       munro.rank = `${rank}=`;
     };
   })

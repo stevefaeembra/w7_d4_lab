@@ -12,7 +12,17 @@ MunroCardView.prototype.render = function () {
   rank.textContent = this.munro.rank;
   const region = document.createElement("td");
   region.textContent = this.munro.region;
+
+  const map = document.createElement("td");
+  const mapLink = document.createElement("a");
+  const x = this.munro.latlng_lng;
+  const y = this.munro.latlng_lat;
+  mapLink.setAttribute('href',`https://www.openstreetmap.org/#map=15/${y}/${x}&layers=C`);
+  mapLink.textContent = "Map";
+  map.appendChild(mapLink);
+
   row.appendChild(name);
+  row.appendChild(map);
   row.appendChild(height);
   row.appendChild(rank);
   row.appendChild(region);
