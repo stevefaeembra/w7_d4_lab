@@ -4,6 +4,10 @@ const PubSub = require('../helpers/pub_sub.js');
 const Munroes = function () {
   this.data = [];
   this.regions = [];
+  // this filter is used to restrict what gets sent out
+  // it's an arrow function passed a munro, which should
+  // return true if it's to be included.
+  this.filter = (item) => true; // no filtering
 }
 
 Munroes.prototype.getRegions = function () {
@@ -29,6 +33,14 @@ Munroes.prototype.bindEvents = function () {
   catch((err) => {
     console.log(err);
   });
+
+  PubSub.subscribe("RegionSelectView:select-changed", (event) => {
+    region = event.detail;
+    console.log(region);
+    this.filter = (munro) => munro.region === region;
+    const filteredData = this.data.filter(this.filter);
+    PubSub.publish("Munroes:got-data", filteredData);
+  })
 };
 
 module.exports = Munroes;

@@ -9,6 +9,12 @@ RegionSelectView.prototype.bindEvents = function () {
     const regions = event.detail;
     console.dir(regions);
     this.populatePullDown("#region-select",regions);
+  });
+  // when we change region, notify view to apply filter
+  const pullDown = document.querySelector('#region-select');
+  pullDown.addEventListener("change", (event) => {
+    const selectedItem = event.target.value;
+    PubSub.publish("RegionSelectView:select-changed",selectedItem);
   })
 };
 

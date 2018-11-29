@@ -5,18 +5,17 @@ const MunroListView = function () {
 };
 
 MunroListView.prototype.bindEvents = function () {
-  debugger;
+  // subscribe to the munro list
   PubSub.subscribe("Munroes:got-data",(event) => {
     var munroData = event.detail;
-
     this.clearTable("#munro-list")
     this.populateTable("#munro-list", munroData);
-  })
+  });
 };
 
 MunroListView.prototype.clearTable = function (tableName) {
   const div = document.querySelector(tableName);
-  div.innerHtml = '';
+  div.innerHTML = '';
 };
 
 MunroListView.prototype.populateTable = function (tableName, munroArray) {
