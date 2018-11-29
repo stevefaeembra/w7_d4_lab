@@ -21,11 +21,25 @@ Munroes.prototype.getRegions = function () {
   return regions.sort();
 };
 
+Munroes.prototype.addRanks = function () {
+  let rank = 0;
+  let height = 9999;
+  this.data.forEach((munro) => {
+    if(munro.height<height) {
+      rank += 1;
+      munro.rank = `${rank}`;
+      height = munro.height;
+    } else {
+      munro.rank = `${rank}=`;
+    };
+  })
+};
 Munroes.prototype.bindEvents = function () {
   const helper = new RequestHelper("https://munroapi.herokuapp.com/api/munros");
   helper.get().
   then((data) => {
     this.data = data;
+    this.addRanks();
     PubSub.publish("Munroes:got-data", this.data);
     this.regions = this.getRegions();
     PubSub.publish("Munroes:got-regions", this.regions);
